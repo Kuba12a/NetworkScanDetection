@@ -9,7 +9,7 @@ sys.path.append(parent_directory)
 from Tests.Common.Common import ProcessCsvAndFindScanners
 
 
-UsageInfo = "Usage: python SampleDataTests.py <quantile(0,1)>"
+UsageInfo = "Usage: python SampleDataTests.py <quantile[0,1]>"
 
 
 def run(threshold_quantile):

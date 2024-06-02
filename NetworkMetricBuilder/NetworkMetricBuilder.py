@@ -51,16 +51,18 @@ class NetworkMetricBuilder:
             Pair of calculated S and C thresholds
         """
         s_threshold_index = math.ceil(len(self.sorted_s_metrics) * threshold_quantile)
-        if s_threshold_index > len(self.sorted_s_metrics) - 1:
-            s_threshold = self.sorted_s_metrics[len(self.sorted_s_metrics) - 1] + 1
+
+        if s_threshold_index < 1:
+            s_threshold = 0
         else:
-            s_threshold = self.sorted_s_metrics[s_threshold_index]
+            s_threshold = self.sorted_s_metrics[s_threshold_index - 1]
 
         c_threshold_index = math.ceil(len(self.sorted_c_metrics) * threshold_quantile)
-        if c_threshold_index > len(self.sorted_c_metrics) - 1:
-            c_threshold = self.sorted_c_metrics[len(self.sorted_c_metrics) - 1] + 1
+
+        if c_threshold_index < 1:
+            c_threshold = 0
         else:
-            c_threshold = self.sorted_c_metrics[c_threshold_index]
+            c_threshold = self.sorted_c_metrics[c_threshold_index - 1]
 
         return s_threshold, c_threshold
 
@@ -146,7 +148,7 @@ class NetworkMetricBuilder:
         filtered_pairs = []
 
         for pair in connection_pairs:
-            if pair.destination_ip in subnet:
+            if pair.destination_ip in subnet and pair.source_ip not in subnet:
                 filtered_pairs.append(pair)
 
         return filtered_pairs
